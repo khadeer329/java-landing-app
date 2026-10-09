@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title th:text="'Java Cloud | ' + ${pageTitle}">Java Cloud</title><link rel="stylesheet" th:href="@{/style.css}"></head>
+<body>
+<header class="nav"><a class="brand" href="/">☕ Java Cloud</a><nav><a href="/">Home</a><a href="/about">About</a><a href="/services">Services</a><a href="/contact">Contact</a></nav></header>
+<main class="info-wrap"><div class="eyebrow" th:text="${pageTitle}">Page</div><h1 th:text="${pageHeading}">Page heading</h1><p th:text="${pageText}">Page content</p><a class="btn primary" href="/">← Back home</a></main>
+<footer>© 2026 Java Cloud Demo <span>Spring Boot · Kubernetes · Argo CD</span></footer>
+</body></html>
