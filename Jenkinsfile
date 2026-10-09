@@ -76,3 +76,8 @@ EOF
             echo 'FAILED: Check the failed stage in Jenkins Console Output.'
         }
         always {
+            echo 'CI pipeline finished.'
+        }
+    }
+}
+
