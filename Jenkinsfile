@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     tools {
-        jdk 'jdk17'
-        maven 'maven'
+        maven 'Maven'
     }
 
     stages {
@@ -25,7 +24,7 @@ pipeline {
             steps {
                 withCredentials([
                     string(
-                        credentialsId: 'sonarqube-token',
+                        credentialsId: 'sonarube token',
                         variable: 'SONAR_TOKEN'
                     )
                 ]) {
