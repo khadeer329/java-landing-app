@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Java Spring Boot Landing Page — Argo CD GitOps Demo
 
 A responsive multi-page Java web application intended for a Kubernetes + Argo CD lab.
@@ -66,3 +67,6 @@ For a production or public AWS deployment, prefer an Ingress or a `LoadBalancer`
 
 ## Updating the site
 Change the HTML/CSS or Java code, build and push a new image tag, update the image tag in `k8s/deployment.yaml`, and push the manifest change to Git. Argo CD will reconcile the cluster to the committed state.
+=======
+# java-landing-app
+>>>>>>> 2deb3671faec86f6c5e0e52b26b2a43aae98880e
