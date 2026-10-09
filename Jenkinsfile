@@ -61,7 +61,7 @@ EOF
 
                         mvn -B deploy \
                           -DskipTests \
-                          -DaltDeploymentRepository=nexus-releases::http://44.222.241.174:8081/repository/maven-releases/ \
+                          -DaltDeploymentRepository=nexus-releases::http://44.222.241.174:8081/repository/maven-snapshots/ \
                           -s nexus-settings.xml
                     '''
                 }
