@@ -25,7 +25,7 @@ pipeline {
             steps {
                 withCredentials([
                     string(
-                        credentialsId: 'sonarube token',
+                        credentialsId: 'sonarube',
                         variable: 'SONAR_TOKEN'
                     )
                 ]) {
