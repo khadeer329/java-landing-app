@@ -1,18 +1,25 @@
 pipeline {
     agent any
 
-environment {
-    DOCKER_IMAGE = 'khadeershaik/java-landing-app'
-}
+    environment {
+        DOCKER_IMAGE = 'khadeershaik/java-landing-app'
+    }
 
     stages {
         stage('Build Docker Image') {
             steps {
                 sh '''
+                    set -eu
+
                     docker build \
                       -t ${DOCKER_IMAGE}:${BUILD_NUMBER} \
                       -t ${DOCKER_IMAGE}:latest \
                       .
+
+                    docker run --rm \
+                      --entrypoint sh \
+                      ${DOCKER_IMAGE}:${BUILD_NUMBER} \
+                      -c 'test -s /app/app.jar'
                 '''
             }
         }
@@ -28,16 +35,15 @@ environment {
                 ]) {
                     sh '''
                         set +x
-                        set -e
+                        set -eu
 
-                        echo "$DOCKER_PASS" | docker login \
+                        printf '%s' "$DOCKER_PASS" |
+                          docker login \
                           --username "$DOCKER_USER" \
                           --password-stdin
 
                         docker push ${DOCKER_IMAGE}:${BUILD_NUMBER}
                         docker push ${DOCKER_IMAGE}:latest
-
-                        docker logout
                     '''
                 }
             }
@@ -45,16 +51,15 @@ environment {
     }
 
     post {
-        success {
-            echo 'SUCCESS: Docker image built and pushed to Docker Hub.'
+        always {
+            sh 'docker logout || true'
+            echo 'Docker pipeline finished.'
         }
-
+        success {
+            echo 'SUCCESS: Docker image built and pushed.'
+        }
         failure {
             echo 'FAILED: Check Jenkins Console Output.'
-        }
-
-        always {
-            echo 'Docker pipeline finished.'
         }
     }
 }
