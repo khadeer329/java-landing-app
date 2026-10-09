@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -37,14 +38,12 @@ pipeline {
                     '''
                 }
             }
-        }   
-    
-
-     
+        }
+    }
 
     post {
         success {
-            echo 'SUCCESS: Tests passed, SonarQube analysis completed, JAR uploaded to Nexus, Docker image pushed.'
+            echo 'SUCCESS: Tests passed and SonarQube analysis completed.'
         }
         failure {
             echo 'FAILED: Check the failed stage in Jenkins Console Output.'
@@ -54,3 +53,4 @@ pipeline {
         }
     }
 }
+```
