@@ -21,24 +21,19 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                withCredentials([
-                    string(
-                        credentialsId: 'sonarube',
-                        variable: 'SONAR_TOKEN'
-                    )
-                ]) {
-                    sh '''
-                        set +x
-                        mvn -B sonar:sonar \
-                          -Dsonar.host.url="$SONAR_URL" \
-                          -Dsonar.projectKey="$SONAR_PROJECT_KEY" \
-                          -Dsonar.token="$SONAR_TOKEN"
-                    '''
-                }
-            }
+    ```groovy
+stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('Sonarqube') {
+            sh '''
+                mvn -B \
+                  org.sonarsource.scanner.maven:sonar-maven-plugin:5.2.0.4988:sonar \
+                  -Dsonar.projectKey=java-landing-app
+            '''
         }
+    }
+}
+```
     }
 
     post {
