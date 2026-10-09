@@ -1,14 +1,12 @@
-FROM maven:3.9-eclipse-temurin-17 AS build
-WORKDIR /app
+FROM tomcat:10.1-jdk21-temurin
 
-COPY pom.xml .
-COPY src ./src
-RUN mvn -B clean package -DskipTests
+# Remove default Tomcat applications
+RUN rm -rf /usr/local/tomcat/webapps/*
 
-FROM eclipse-temurin:17-jre
-WORKDIR /app
+# Deploy the application
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
 
-COPY --from=build /app/target/*.jar app.jar
-
+# Tomcat listens on port 8080
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+CMD ["catalina.sh", "run"]
