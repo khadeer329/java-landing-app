@@ -14,28 +14,12 @@ pipeline {
             }
         }
 
-        stage('Set Dynamic Version') {
-    steps {
-        script {
-            env.APP_VERSION = "1.0.${BUILD_NUMBER}"
+           stage('Build and Test') {
+            steps {
+                sh 'mvn -B clean verify'
+            }
         }
-        echo "Application version: ${APP_VERSION}"
-    }
-}
 
-        stage('Maven Build') {
-    steps {
-        sh '''
-APP_VERSION="1.0.${BUILD_NUMBER}"
-echo "Publishing version: ${APP_VERSION}"
-
-mvn -B clean deploy \
-  -Drevision="${APP_VERSION}" \
-  -DskipTests
-
-'''
-    }
-}
 
         stage('SonarQube Analysis') {
             steps {
