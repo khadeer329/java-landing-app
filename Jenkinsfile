@@ -14,12 +14,11 @@ pipeline {
             }
         }
 
-           stage('Build and Test') {
+        stage('Build and Test') {
             steps {
                 sh 'mvn -B clean verify'
             }
         }
-
 
         stage('SonarQube Analysis') {
             steps {
@@ -61,7 +60,7 @@ EOF
 
                         mvn -B deploy \
                           -DskipTests \
-                          -DaltDeploymentRepository=nexus-releases::http://44.222.241.174:8081/repository/maven-snapshots/ \
+                          -DaltDeploymentRepository=nexus-releases::http://44.222.241.174:8081/repository/maven-releases/ \
                           -s nexus-settings.xml
                     '''
                 }
@@ -77,7 +76,3 @@ EOF
             echo 'FAILED: Check the failed stage in Jenkins Console Output.'
         }
         always {
-            echo 'CI pipeline finished.'
-        }
-    }
-}
