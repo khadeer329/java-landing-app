@@ -21,7 +21,6 @@ pipeline {
             }
         }
 
-    ```groovy
 stage('SonarQube Analysis') {
     steps {
         withSonarQubeEnv('Sonarqube') {
@@ -33,7 +32,6 @@ stage('SonarQube Analysis') {
         }
     }
 }
-```
     }
 
     post {
