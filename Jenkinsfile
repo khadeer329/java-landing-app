@@ -25,7 +25,15 @@ pipeline {
 
         stage('Maven Build') {
     steps {
-        sh 'mvn -B clean package -Drevision=${APP_VERSION} -DskipTests'
+        sh '''
+APP_VERSION="1.0.${BUILD_NUMBER}"
+echo "Publishing version: ${APP_VERSION}"
+
+mvn -B clean deploy \
+  -Drevision="${APP_VERSION}" \
+  -DskipTests
+
+'''
     }
 }
 
