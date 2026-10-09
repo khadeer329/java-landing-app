@@ -1,0 +1,28 @@
+stage('Build and Push Docker Image') {
+    steps {
+        withCredentials([
+            usernamePassword(
+                credentialsId: 'dockerhub-creds',
+                usernameVariable: 'DOCKER_USER',
+                passwordVariable: 'DOCKER_PASS'
+            )
+        ]) {
+            sh '''
+                set +x
+                set -e
+
+                echo "$DOCKER_PASS" | docker login \
+                    -u "$DOCKER_USER" --password-stdin
+
+                docker build \
+                    -t "$DOCKER_USER/java-landing-app:${BUILD_NUMBER}" \
+                    -t "$DOCKER_USER/java-landing-app:latest" .
+
+                docker push "$DOCKER_USER/java-landing-app:${BUILD_NUMBER}"
+                docker push "$DOCKER_USER/java-landing-app:latest"
+
+                docker logout
+            '''
+        }
+    }
+}
